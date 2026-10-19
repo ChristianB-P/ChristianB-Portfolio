@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christian Robin Buenaventura - Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: '#22c55e',
+                            600: '#16a34a',
+                        },
+                        darkbg: '#0d0e12',
+                        darkcard: '#16181d',
+                        darkborder: '#1e3a8a'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    keyframes: {
+                        floatLeft: {
+                            '0%, 100%': { transform: 'translate(0px, 0px)' },
+                            '50%': { transform: 'translate(0px, -8px)' },
+                        },
+                        floatRight: {
+                            '0%, 100%': { transform: 'translate(0px, 0px)' },
+                            '50%': { transform: 'translate(0px, -8px)' },
+                        }
+                    },
+                    animation: {
+                        'float-left': 'floatLeft 4s ease-in-out infinite',
+                        'float-right': 'floatRight 4.5s ease-in-out infinite 0.5s',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jsPDF Library for Dynamic Resume Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen font-sans transition-colors duration-300">
+
+  <header class="sticky top-0 z-30 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <span class="text-sm font-mono text-slate-500">Portfolio</span>
+      <button id="theme-toggle-btn" 
+              aria-label="Toggle Theme"
+              class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+        <i id="theme-toggle-icon" class="fas fa-moon text-lg"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+
+    <!-- Top Animated Header Section -->
+    <section id="top-section" class="overflow-hidden py-2">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            
+            <!-- Left Card: Picture Frame (Slides in from Left) -->
+            <div id="left-picture-card" 
+                 class="md:col-span-4 transform -translate-x-full opacity-0 transition-all duration-700 ease-out bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-6 shadow-lg shadow-blue-500/5 flex flex-col items-center justify-center min-h-[240px]">
+                <div class="relative w-36 h-36 rounded-2xl p-1 bg-gradient-to-tr from-blue-600 to-indigo-500 shadow-md">
+                    <img src="./profile.jpg" 
+                         alt="Christian Robin Buenaventura" 
+                         class="w-full h-full object-cover rounded-xl border-2 border-white dark:border-slate-900">
+                    <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full" title="Active"></span>
+                </div>
+                <p class="mt-4 font-mono text-xs text-slate-400">Learning something new everyday</p>
+            </div>
+
+            <!-- Right Card: Name & Role (Slides in from Right) -->
+            <div id="right-info-card" 
+                 class="md:col-span-8 transform translate-x-full opacity-0 transition-all duration-700 ease-out bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-8 sm:p-10 shadow-lg shadow-blue-500/5 flex flex-col justify-center min-h-[240px]">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-600 dark:text-blue-400 font-mono text-xs w-max mb-4">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    Available for projects &amp; collaboration
+                </div>
+                
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
+                    Christian Robin Buenaventura
+                </h1>
+                
+                <h2 class="text-lg sm:text-xl font-mono text-blue-600 dark:text-blue-400 font-medium">
+                    Computer Engineering Student
+                </h2>
+                
+                <p class="mt-4 text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
+                    Combining low-level hardware integration, software logic, and creative UI design to craft functional systems and applications.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about-section" class="overflow-hidden py-2 space-y-4">
+        
+        <!-- Top Card: About Me Title Bar -->
+        <div id="about-title-card" 
+             class="transform -translate-x-full opacity-0 transition-all duration-700 ease-out bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-6 shadow-lg shadow-blue-500/5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-3 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl">
+                    <i class="fas fa-user-code text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">About Me</h2>
+                    <p class="font-mono text-xs text-slate-400">Background &amp; Specialization</p>
+                </div>
+            </div>
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono text-xs border border-blue-500/30">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                <span>Bio &amp; Specs</span>
+            </div>
+        </div>
+
+        <!-- Bottom Card: Bio Context & Quick Specs -->
+        <div id="about-content-card" 
+             class="transform translate-x-full opacity-0 transition-all duration-700 ease-out bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-6 sm:p-10 shadow-lg shadow-blue-500/5 flex flex-col justify-between space-y-6">
+            
+            <div class="space-y-4 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+                <p>
+                    Hello! I am a Computer Engineering student driven by hardware-software integration, system design, and network prototyping. My foundation spans low-level microcontrollers with Arduino, network modeling via Cisco Packet Tracer, and mobile development in Android Studio.
+                </p>
+                <p>
+                    Alongside engineering tools like AutoCAD and programming languages like Python and Java, I bring a strong creative edge through digital art, UI design, and visual communication using Canva and Ibis Paint.
+                </p>
+            </div>
+
+            <!-- Quick Info Tags -->
+            <div class="pt-6 border-t border-blue-500/20 grid grid-cols-2 sm:grid-cols-4 gap-6 font-mono text-xs">
+                <div>
+                    <span class="block text-slate-400 mb-1">Location</span>
+                    <span class="font-semibold text-slate-700 dark:text-slate-200">Binangonan, Rizal (GMT+8)</span>
+                </div>
+                <div>
+                    <span class="block text-slate-400 mb-1">Primary Stack</span>
+                    <span class="font-semibold text-slate-700 dark:text-slate-200">Python, Java, Arduino</span>
+                </div>
+                <div>
+                    <span class="block text-slate-400 mb-1">Role & Focus</span>
+                    <span class="font-semibold text-slate-700 dark:text-slate-200">CompEng & Digital Art</span>
+                </div>
+                <div>
+                    <span class="block text-slate-400 mb-1">Education</span>
+                    <span class="font-semibold text-slate-700 dark:text-slate-200">B.S. Computer Engineering</span>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills-section" class="overflow-hidden py-2 space-y-4">
+        
+        <!-- Top Card: Skills Title Bar -->
+        <div id="skills-title-card" 
+             class="transform -translate-x-full opacity-0 transition-all duration-700 ease-out bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-6 shadow-lg shadow-blue-500/5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-3 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl">
+                    <i class="fas fa-microchip text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Skills</h2>
+                    <p class="font-mono text-xs text-slate-400">Tech, Tools &amp; Creative Stack</p>
+                </div>
+            </div>
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono text-xs border border-blue-500/30">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                <span>Core Competencies</span>
+            </div>
+        </div>
+
+        <!-- Bottom Container: Skills Categorized Grid Card -->
+        <div id="skills-content-card" 
+             class="transform translate-x-full opacity-0 transition-all duration-700 ease-out bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-6 sm:p-10 shadow-lg shadow-blue-500/5 grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Category 1: Software & Digital Tools -->
+            <div class="space-y-4">
+                <h3 class="font-mono text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fas fa-screwdriver-wrench"></i> Software &amp; Digital Tools
+                </h3>
+                <div class="flex flex-wrap gap-2.5">
+                    <span class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-mono border border-blue-500/20 hover:border-blue-500 transition-colors">AutoCAD</span>
+                    <span class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-mono border border-blue-500/20 hover:border-blue-500 transition-colors">Android Studio</span>
+                    <span class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-mono border border-blue-500/20 hover:border-blue-500 transition-colors">Cisco Packet Tracer</span>
+                    <span class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-mono border border-blue-500/20 hover:border-blue-500 transition-colors">Arduino IDE</span>
+                </div>
+            </div>
+
+            <!-- Category 2: Programming Languages -->
+            <div class="space-y-4">
+                <h3 class="font-mono text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fas fa-code"></i> Programming Languages
+                </h3>
+                <div class="flex flex-wrap gap-2.5">
+                    <span class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-mono border border-blue-500/20 hover:border-blue-500 transition-colors">Python (Basic Syntax)</span>
+                    <span class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-mono border border-blue-500/20 hover:border-blue-500 transition-colors">Java (Basic Syntax)</span>
+                    <span class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-mono border border-blue-500/20 hover:border-blue-500 transition-colors">XML</span>
+                </div>
+            </div>
+
+            <!-- Category 3: Productivity, Design & Art -->
+            <div class="space-y-4">
+                <h3 class="font-mono text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fas fa-palette"></i> Productivity, Design &amp; Art
+                </h3>
+                <div class="flex flex-wrap gap-2.5">
+                    <span class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-mono border border-blue-500/20 hover:border-blue-500 transition-colors">MS Word</span>
+                    <span class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-mono border border-blue-500/20 hover:border-blue-500 transition-colors">PowerPoint</span>
+                    <span class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-mono border border-blue-500/20 hover:border-blue-500 transition-colors">Canva</span>
+                    <span class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-mono border border-blue-500/20 hover:border-blue-500 transition-colors">Ibis Paint</span>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Current Projects Section -->
+    <section id="projects-section" class="overflow-hidden py-2 space-y-4">
+        
+        <!-- Top Card: Projects Title Bar -->
+        <div id="projects-title-card" 
+             class="transform -translate-x-full opacity-0 transition-all duration-700 ease-out bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-6 shadow-lg shadow-blue-500/5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-3 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl">
+                    <i class="fas fa-code-branch text-2xl animate-pulse"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Current Projects</h2>
+                    <p class="font-mono text-xs text-slate-400">Active Development Repository</p>
+                </div>
+            </div>
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono text-xs border border-blue-500/30">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                <span>In Progress</span>
+            </div>
+        </div>
+
+        <!-- Bottom Container: Single Current Project Card -->
+        <div id="projects-content-card" 
+             class="transform translate-x-full opacity-0 transition-all duration-700 ease-out">
+            
+            <div class="bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-6 sm:p-8 shadow-lg shadow-blue-500/5 flex flex-col justify-between group transition-colors duration-300 space-y-6">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono text-blue-600 dark:text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full font-medium border border-blue-500/20">Active Repository</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">
+                        Ongoing Projects
+                    </h3>
+                    <p class="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Initializing workspace structure, code modules, and active project builds for ongoing computer engineering and software experiments.
+                    </p>
+                </div>
+
+                <div class="pt-4 border-t border-blue-500/20 flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex flex-wrap gap-2 font-mono text-xs text-slate-500 dark:text-slate-400">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 border border-blue-500/20">Git</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 border border-blue-500/20">GitHub</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 border border-blue-500/20">Main Branch</span>
+                    </div>
+                    <a href="https://github.com/ChristianB-P/CurrentProjects.git" target="_blank" rel="noopener noreferrer" class="px-4 py-2 text-xs font-mono font-medium rounded-xl bg-blue-600 text-white hover:bg-blue-500 transition-colors shadow-md shadow-blue-500/20 inline-flex items-center gap-2">
+                        <i class="fab fa-github"></i>
+                        <span>Open Repository</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Finished Projects Section -->
+    <section id="finished-projects-section" class="overflow-hidden py-2 space-y-4">
+        
+        <!-- Top Card: Finished Projects Title Bar -->
+        <div id="finished-title-card" 
+             class="transform -translate-x-full opacity-0 transition-all duration-700 ease-out bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-6 shadow-lg shadow-blue-500/5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-3 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl">
+                    <i class="fas fa-circle-check text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Finished Projects</h2>
+                    <p class="font-mono text-xs text-slate-400">Deployed &amp; Completed Works</p>
+                </div>
+            </div>
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono text-xs border border-blue-500/30">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>Completed</span>
+            </div>
+        </div>
+
+        <!-- Bottom Container: Single ElectroEdge Project Card -->
+        <div id="finished-content-card" 
+             class="transform translate-x-full opacity-0 transition-all duration-700 ease-out">
+            
+            <div class="bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-6 sm:p-8 shadow-lg shadow-blue-500/5 flex flex-col justify-between group transition-colors duration-300 space-y-6">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full font-medium border border-emerald-500/20">CpE Educational Application</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">
+                        ElectroEdge
+                    </h3>
+                    <p class="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+                        An application designed to help Computer Engineering students review in a progressive, structured way with automated score tracking and learning metrics.
+                    </p>
+                </div>
+
+                <div class="pt-4 border-t border-blue-500/20 flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex flex-wrap gap-2 font-mono text-xs text-slate-500 dark:text-slate-400">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 border border-blue-500/20">Progressive Modules</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 border border-blue-500/20">Score Tracking</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 border border-blue-500/20">CpE Reviewer</span>
+                    </div>
+                    <a href="https://github.com/ChristianB-P/FinishedProjects.git" target="_blank" rel="noopener noreferrer" class="px-4 py-2 text-xs font-mono font-medium rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-blue-600 dark:hover:bg-blue-600 text-white transition-colors border border-blue-500/30 inline-flex items-center gap-2">
+                        <i class="fab fa-github"></i>
+                        <span>View Repository</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+            <!-- Contact Section -->
+    <section id="contact-section" class="overflow-hidden py-2 space-y-4">
+        
+        <!-- Top Card: Contact Title Bar -->
+        <div id="contact-title-card" 
+             class="transform -translate-x-full opacity-0 transition-all duration-700 ease-out bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-6 shadow-lg shadow-blue-500/5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-3 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl">
+                    <i class="fas fa-paper-plane text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Get In Touch</h2>
+                    <p class="font-mono text-xs text-slate-400">Connect &amp; Collaboration</p>
+                </div>
+            </div>
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono text-xs border border-blue-500/30">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Active Mailbox</span>
+            </div>
+        </div>
+
+        <!-- Bottom Container: Contact CTAs & Downloadable Resume Card -->
+        <div id="contact-content-card" 
+             class="transform translate-x-full opacity-0 transition-all duration-700 ease-out bg-white dark:bg-darkcard border-2 border-blue-500/40 dark:border-blue-500/50 hover:border-blue-500 rounded-2xl p-6 sm:p-10 shadow-lg shadow-blue-500/5 flex flex-col md:flex-row items-center justify-between gap-8">
+            
+            <div class="space-y-4 text-center md:text-left">
+                <h3 class="text-2xl font-bold text-slate-900 dark:text-white">
+                    Let's Build Something Together
+                </h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
+                    Have an engineering query, project proposal, or collaboration idea? Feel free to reach out directly via email or visit my repositories.
+                </p>
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
+                    <a href="mailto:christianrobinbuenaventura.com"
+                       class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-colors shadow-md shadow-blue-500/20">
+                        <i class="fas fa-envelope"></i>
+                        <span>Send Email</span>
+                    </a>
+                    <a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer"
+                       class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 border border-blue-500/20 transition-colors" title="LinkedIn Profile">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="https://github.com/ChristianB-P" target="_blank" rel="noopener noreferrer"
+                       class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 border border-blue-500/20 transition-colors" title="GitHub Profile">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Downloadable Resume Card Button -->
+            <div class="w-full md:w-auto flex-shrink-0 flex justify-center">
+                <a href="./Buenaventura_Resume.pdf" download="Christian_Buenaventura_Resume.pdf" 
+                   class="group relative inline-flex items-center gap-4 px-6 py-4 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-blue-600 dark:hover:bg-blue-600 text-white font-mono text-sm border-2 border-blue-500/50 shadow-xl transition-all duration-300">
+                    <div class="p-2.5 rounded-lg bg-blue-500/20 group-hover:bg-white/20 transition-colors">
+                        <i class="fas fa-file-arrow-down text-xl text-blue-400 group-hover:text-white"></i>
+                    </div>
+                    <div class="text-left">
+                        <span class="block text-xs text-slate-400 group-hover:text-blue-100 transition-colors">PDF Format</span>
+                        <span class="font-bold">Download Resume</span>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    // Theme Toggle Functionality
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const themeToggleIcon = document.getElementById('theme-toggle-icon');
+
+    if (localStorage.theme === 'light') {
+        document.documentElement.classList.remove('dark');
+        themeToggleIcon.className = 'fas fa-sun text-lg';
+    } else {
+        document.documentElement.classList.add('dark');
+        themeToggleIcon.className = 'fas fa-moon text-lg';
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.theme = 'light';
+            themeToggleIcon.className = 'fas fa-sun text-lg';
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.theme = 'dark';
+            themeToggleIcon.className = 'fas fa-moon text-lg';
+        }
+    });
+
+    // Helper functions for floating animation after entrance
+    function applyFloating(element, floatAnimationClass) {
+        element.classList.add(floatAnimationClass);
+    }
+
+    function removeFloating(element, floatAnimationClass) {
+        element.classList.remove(floatAnimationClass);
+    }
+
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const targetId = entry.target.id;
+            
+            if (targetId === 'top-section') {
+                const leftCard = document.getElementById('left-picture-card');
+                const rightCard = document.getElementById('right-info-card');
+                
+                if (entry.isIntersecting) {
+                    leftCard.classList.remove('-translate-x-full', 'opacity-0');
+                    leftCard.classList.add('translate-x-0', 'opacity-100');
+                    
+                    rightCard.classList.remove('translate-x-full', 'opacity-0');
+                    rightCard.classList.add('translate-x-0', 'opacity-100');
+
+                    setTimeout(() => {
+                        applyFloating(leftCard, 'animate-float-left');
+                        applyFloating(rightCard, 'animate-float-right');
+                    }, 700);
+                } else {
+                    removeFloating(leftCard, 'animate-float-left');
+                    removeFloating(rightCard, 'animate-float-right');
+
+                    leftCard.classList.remove('translate-x-0', 'opacity-100');
+                    leftCard.classList.add('-translate-x-full', 'opacity-0');
+                    
+                    rightCard.classList.remove('translate-x-0', 'opacity-100');
+                    rightCard.classList.add('translate-x-full', 'opacity-0');
+                }
+            }
+
+            if (targetId === 'about-section') {
+                const aboutTitleCard = document.getElementById('about-title-card');
+                const aboutContentCard = document.getElementById('about-content-card');
+
+                if (entry.isIntersecting) {
+                    aboutTitleCard.classList.remove('-translate-x-full', 'opacity-0');
+                    aboutTitleCard.classList.add('translate-x-0', 'opacity-100');
+
+                    aboutContentCard.classList.remove('translate-x-full', 'opacity-0');
+                    aboutContentCard.classList.add('translate-x-0', 'opacity-100');
+
+                    setTimeout(() => {
+                        applyFloating(aboutTitleCard, 'animate-float-left');
+                        applyFloating(aboutContentCard, 'animate-float-right');
+                    }, 700);
+                } else {
+                    removeFloating(aboutTitleCard, 'animate-float-left');
+                    removeFloating(aboutContentCard, 'animate-float-right');
+
+                    aboutTitleCard.classList.remove('translate-x-0', 'opacity-100');
+                    aboutTitleCard.classList.add('-translate-x-full', 'opacity-0');
+
+                    aboutContentCard.classList.remove('translate-x-0', 'opacity-100');
+                    aboutContentCard.classList.add('translate-x-full', 'opacity-0');
+                }
+            }
+
+            if (targetId === 'skills-section') {
+                const skillsTitleCard = document.getElementById('skills-title-card');
+                const skillsContentCard = document.getElementById('skills-content-card');
+
+                if (entry.isIntersecting) {
+                    skillsTitleCard.classList.remove('-translate-x-full', 'opacity-0');
+                    skillsTitleCard.classList.add('translate-x-0', 'opacity-100');
+
+                    skillsContentCard.classList.remove('translate-x-full', 'opacity-0');
+                    skillsContentCard.classList.add('translate-x-0', 'opacity-100');
+
+                    setTimeout(() => {
+                        applyFloating(skillsTitleCard, 'animate-float-left');
+                        applyFloating(skillsContentCard, 'animate-float-right');
+                    }, 700);
+                } else {
+                    removeFloating(skillsTitleCard, 'animate-float-left');
+                    removeFloating(skillsContentCard, 'animate-float-right');
+
+                    skillsTitleCard.classList.remove('translate-x-0', 'opacity-100');
+                    skillsTitleCard.classList.add('-translate-x-full', 'opacity-0');
+
+                    skillsContentCard.classList.remove('translate-x-0', 'opacity-100');
+                    skillsContentCard.classList.add('translate-x-full', 'opacity-0');
+                }
+            }
+
+            if (targetId === 'projects-section') {
+                const projectsTitleCard = document.getElementById('projects-title-card');
+                const projectsContentCard = document.getElementById('projects-content-card');
+
+                if (entry.isIntersecting) {
+                    projectsTitleCard.classList.remove('-translate-x-full', 'opacity-0');
+                    projectsTitleCard.classList.add('translate-x-0', 'opacity-100');
+
+                    projectsContentCard.classList.remove('translate-x-full', 'opacity-0');
+                    projectsContentCard.classList.add('translate-x-0', 'opacity-100');
+
+                    setTimeout(() => {
+                        applyFloating(projectsTitleCard, 'animate-float-left');
+                        applyFloating(projectsContentCard, 'animate-float-right');
+                    }, 700);
+                } else {
+                    removeFloating(projectsTitleCard, 'animate-float-left');
+                    removeFloating(projectsContentCard, 'animate-float-right');
+
+                    projectsTitleCard.classList.remove('translate-x-0', 'opacity-100');
+                    projectsTitleCard.classList.add('-translate-x-full', 'opacity-0');
+
+                    projectsContentCard.classList.remove('translate-x-0', 'opacity-100');
+                    projectsContentCard.classList.add('translate-x-full', 'opacity-0');
+                }
+            }
+
+            if (targetId === 'finished-projects-section') {
+                const finishedTitleCard = document.getElementById('finished-title-card');
+                const finishedContentCard = document.getElementById('finished-content-card');
+
+                if (entry.isIntersecting) {
+                    finishedTitleCard.classList.remove('-translate-x-full', 'opacity-0');
+                    finishedTitleCard.classList.add('translate-x-0', 'opacity-100');
+
+                    finishedContentCard.classList.remove('translate-x-full', 'opacity-0');
+                    finishedContentCard.classList.add('translate-x-0', 'opacity-100');
+
+                    setTimeout(() => {
+                        applyFloating(finishedTitleCard, 'animate-float-left');
+                        applyFloating(finishedContentCard, 'animate-float-right');
+                    }, 700);
+                } else {
+                    removeFloating(finishedTitleCard, 'animate-float-left');
+                    removeFloating(finishedContentCard, 'animate-float-right');
+
+                    finishedTitleCard.classList.remove('translate-x-0', 'opacity-100');
+                    finishedTitleCard.classList.add('-translate-x-full', 'opacity-0');
+
+                    finishedContentCard.classList.remove('translate-x-0', 'opacity-100');
+                    finishedContentCard.classList.add('translate-x-full', 'opacity-0');
+                }
+            }
+
+            if (targetId === 'contact-section') {
+                const contactTitleCard = document.getElementById('contact-title-card');
+                const contactContentCard = document.getElementById('contact-content-card');
+
+                if (entry.isIntersecting) {
+                    contactTitleCard.classList.remove('-translate-x-full', 'opacity-0');
+                    contactTitleCard.classList.add('translate-x-0', 'opacity-100');
+
+                    contactContentCard.classList.remove('translate-x-full', 'opacity-0');
+                    contactContentCard.classList.add('translate-x-0', 'opacity-100');
+
+                    setTimeout(() => {
+                        applyFloating(contactTitleCard, 'animate-float-left');
+                        applyFloating(contactContentCard, 'animate-float-right');
+                    }, 700);
+                } else {
+                    removeFloating(contactTitleCard, 'animate-float-left');
+                    removeFloating(contactContentCard, 'animate-float-right');
+
+                    contactTitleCard.classList.remove('translate-x-0', 'opacity-100');
+                    contactTitleCard.classList.add('-translate-x-full', 'opacity-0');
+
+                    contactContentCard.classList.remove('translate-x-0', 'opacity-100');
+                    contactContentCard.classList.add('translate-x-full', 'opacity-0');
+                }
+            }
+        });
+    }, observerOptions);
+
+    window.addEventListener('DOMContentLoaded', () => {
+        sectionObserver.observe(document.getElementById('top-section'));
+        sectionObserver.observe(document.getElementById('about-section'));
+        sectionObserver.observe(document.getElementById('skills-section'));
+        sectionObserver.observe(document.getElementById('projects-section'));
+        sectionObserver.observe(document.getElementById('finished-projects-section'));
+        sectionObserver.observe(document.getElementById('contact-section'));
+    });
+  </script>
+
+</body>
+</html>
